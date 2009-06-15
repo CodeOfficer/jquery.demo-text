@@ -4,7 +4,7 @@ $(function(){
     var element = $(this);
     var demo_text = element.attr('data-demo-text');
     if (demo_text != null) {
-      if (element.val() == '') {
+      if (element.val() == '' || element.val() == demo_text) {
         element.val( demo_text );
         element.addClass('demo-text');
       }
