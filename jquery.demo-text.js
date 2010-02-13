@@ -1,46 +1,56 @@
-$(function(){
 
-  $('*[data-demo-text]').each(function(){
-    var element = $(this);
-    var demo_text = element.attr('data-demo-text');
-    var form      = element.parents('form');
+// USAGE:
+// $('*[data-demo-text]').demoText();
+// can be called multiple times and will ignore dups
 
-    // if we submit the form, make sure to blank out these 
-    // fields (if they have the demo text in them)
-    form.submit(function(){
-      if (element.val() == demo_text) {
-        element.val('');
-      }
-    });
+(function(jQuery) {
+	jQuery.fn.demoText = function(action, options) {
+		settings = jQuery.extend({
+			attribute: "data-demo-text",
+			className: "demo-text"
+		}, options);
+ 
+		this.each(function() {
+			var $element 	= $(this);
+			if ($element.data('demoTextInit')) return;
+	    var $form     = $element.parents('form');
+	    var demo_text = $element.attr(settings.attribute);
+			
+			// clear demo text before submit if present
+	    $form.submit(function(){
+	      if ($element.val() == demo_text) {
+	        $element.val('');
+	      }
+	    });
 
-    if (demo_text != null) {
-      if (element.val() == '' || element.val() == demo_text) {
-        element.val( demo_text );
-        element.addClass('demo-text');
-      }
-    }
-  });
-
-  $('*[data-demo-text]').focus(function(){
-    var element = $(this);
-    var demo_text = element.attr('data-demo-text');
-    if (demo_text != null) {
-      if (element.val() == demo_text) {
-        element.val('');
-        element.removeClass('demo-text');
-      }
-    }
-  });
-
-  $('*[data-demo-text]').blur(function(){
-    var element = $(this);
-    var demo_text = element.attr('data-demo-text');
-    if (demo_text != null) {
-      if (element.val() == '') {
-        element.val( demo_text );
-        element.addClass('demo-text');
-      }
-    }
-  });
-
-});
+	    if (demo_text != null) {
+	      if ($element.val() == '' || $element.val() == demo_text) {
+	        $element.val(demo_text);
+	        $element.addClass(settings.className);
+	      };
+	    };
+			
+			$element.focus(function() {
+		    if (demo_text != null) {
+		      if ($element.val() == demo_text) {
+		        $element.val('');
+		        $element.removeClass(settings.className);
+		      };
+		    };
+			});
+			
+			$element.blur(function() {
+		    if (demo_text != null) {
+		      if ($element.val() == '') {
+		        $element.val(demo_text);
+		        $element.addClass(settings.className);
+		      };
+		    };
+			});
+			
+			$element.data('demoTextInit', true);
+		});
+ 
+		return this;
+	};
+})(jQuery);

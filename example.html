@@ -7,8 +7,15 @@
         display: block;
       }
     </style>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript" src="jquery.demo-text.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			;(function($) {
+				$(function() {
+					$("*[data-demo-text]").demoText();		
+				});
+			})(jQuery);
+		</script>
   </head>
   <body>
     <form>
